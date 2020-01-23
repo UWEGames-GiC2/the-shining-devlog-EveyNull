@@ -1,31 +1,27 @@
 ---
 layout: post
-title: Project 237 - A game concept
-date: 2019-12-18T13:19:00.000Z
-description: Concept & design
+title: The Scene Manager
+date: 2020-01-15T13:19:00.000Z
+description: Our implementation of a scene manager
 published: true
-category: design
+category: technical
 tags:
 - project 237
 - c++
 - low level programming
-- design
+- scene manager
 ---
 
-For our second assignment this year we were tasked with designing and developing a full game in C++, inspired by the film 'The Shining' by Stanley Kubrick.
+Following instruction from our Game Engine Architecture module and by our tutor we were given as a requirement the use of Manager classes, specifically a Scene Manager as a minimum, to better structure our code and implement systems in our game in a sensible and practical manner.
 
-Our focus quickly went to the maze scene, where the enraged Jack pursues his son through a hedge maze in the cold. We took inspiration from games like Slender and pac-man; the former for its semi-random item distribution in a level with the player seeking them throughout the area - the latter for its claustrophobic maze layout and varied A.I. making gameplay fastpaced and frantic.
+My main understanding of Scene Managers came from using Unity, where the Scene Manager is responsible for loading Scenes - effectively game levels or screens such as the main menu, level selection... effectively it manages the different game states and ensures data is being processed appropriately and the respective screens rendered properly, in order. At times for example several scenes may be active at once - such as a game level and a pause screen - and the scene manager can maintain control of both and ensure they are loaded or unloaded when required.
 
-In a combination of the two ideas our original concept was a game where you must hide in the maze while pursued by Jack, who is intelligent and follows your footprints left in the snow. The goal was to elude him long enough for him to become worn down and give in to the cold, at which point you were free to exit the maze.
+As I understood things the Scene Manager would effectively be the root of the game, owner of any objects that represented scenes such as the level and UI, and controlling the update and render functions of each to manage what data was being processed and what was being shown on screen.
 
-Also as a concept was the 'Shining' ability, allowing the player to see where Jack was as well as the exit, so long as they stood still for a few seconds. We wanted to ensure the player did not get totally lost in the maze while also making it a trade-off in that they risked Jack catching up further if they used the ability.
+First I implemented a GameState enum to track what the condition of the game; e.g. in the main menu or ingame. I also gave the scene manager ownership of the Level object which would contain, effectively, the entire map and all gameobjects within it which would be a part of the game scene. The SceneManager would initialise the Level when the game began and destroy it when the player returned to the main menu. Depending on the difficulty selected by the player, the Level's own difficulty setting would be assigned appropriately as well, which could then be passed on to all objects that behaved according to the difficulty chosen.
 
-Finally in homage to the game 'Slender' our idea was to have unlockable pieces of writing or lore scattered throughout the maze, which the player could collect. Once found these would be permanently unlocked in the main menu and over multiple plays the player could eventually complete their collection as long as they kept finding the hidden collectibles.
+Because the Scene Manager in this structure acts as the root of all other objects, it seemed sensible for it to store data regarding the current key presses; it would need these for one to process changes in state when the player moved through menus or paused the game, and could pass them on to the scenes' update functions where they would be needed (e.g. to move the player). This was stored as a bitset which simply stored whether that key was currently pressed (updated by the keyhandler function in the base game.cpp).
 
-After presenting this concept the feedback we received was for one that it seemed unintuitive that the player could not simply escape the maze straight away and had to face what was seen as an arbitrary timer countdown. As well as this it seemed too simple a gameplay loop; the only mechanic was to run away and hide, which while worked well with the horror genre just did not offer enough to remain interesting for very long.
+Each frame the manager checks its current state; if the appropriate key or keys are pressed to change state it updates appropriately, else if the game is running it passes on the need to call the level's update and render functions in order to process and display the level's owned objects (while those objects remain out of scope for the manager itself). This could in theory be expanded to simply call the update function of whatever scene is loaded.
 
-Our developed design therefore introduced new gameplay elements; now rather than eluding Jack at all times the goal was to find items inside the maze that could harm or slow him, and set them up as traps. This added extra dimensions to the gameplay; the player was not just running around without aim but instead had something to seek and pursue, while at the same time they needed to at times risk coming into close encounters with Jack in order to bait him into the traps they set. There was more of a risk/reward dynamic at play, with the player wishing to stay far away enough to be safe while not so close that they would get caught.
-
-We also added further incentive to playing multiple times at different difficulties; the unlockable writings would now vary depending on the difficulty selected by the player and therefore to unlock all of them the player would need to try the game at all levels of difficulty. We wanted to encourage the player to try the harder modes even though they may be significantly challenging.
-
-Overall our main selling points were the unlockables, the random maze generation and the AI pathfinding ability, tracking both the player's nearby location and being able to follow their footprints in the snow. These were likely to be challenging to program but certainly not above our ability - we had a good idea how it might all be done and were confident we could achieve our goals.
+Implemented, the scene manager has made it practical and intuitive to control how the game updates and displays relevant information; it was, compared to previous projects, relatively easy to implement pausing for example, and player-controlled transition between different difficulties or exiting the game.
