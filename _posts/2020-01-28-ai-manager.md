@@ -4,7 +4,7 @@ title: Developing an artificial intelligence...
 date: 2020-01-28T13:19:00.000Z
 description: Multiple layers of intelligence & pathfinding
 published: true
-category: design
+category: technical
 tags:
 - project 237
 - c++
