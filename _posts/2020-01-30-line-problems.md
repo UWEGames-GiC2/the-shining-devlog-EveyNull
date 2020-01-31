@@ -24,7 +24,7 @@ This gave me the angle in radians which could be fed directly to the sprite, whi
 
 Except... I hadn't accounted for the way sprites were drawn in ASGE. They're drawn from the top-left, totally reasonable. What I didn't know was that when you rotate a sprite in ASGE, it rotates from the centre of the sprite. Again, quite reasonable in most circumstances, but in this case I wanted to rotate around one end of the line. The results were... not quite what I wanted.
 
-![AI-chase](/assets/badline.png)
+![AI-chase]({{ site.baseurl }}/assets/badline.png)
 
 Because the sprite was drawn from the top left and then rotated from its middle, its origin and end point were obviously being skewed off from their intended position. It took a lot of work to discover how to properly render this so that the line began from the player and reached out to the enemy.
 
@@ -36,10 +36,10 @@ A good step forwards was correcting the Y-position by the average Y position of 
 
 At this point I got assistance from someone a little better at maths than me... and as I understood things it was a matter of imagining the situation as within a circle.
 
-![AI-chase](/assets/sincostan.png)
+![AI-chase]({{ site.baseurl }}/assets/sincostan.png)
 
 If O is the origin, i.e. the player, and the enemy vector represented a point on the circumference of a circle surrounding the player, and the line itself a line between the two, we tried adjusting the xPos of the line by its Cos(angleinradians). This was actually close but not quite right... because the player wasn't actually at O, but at a position slightly left of it. It's hard to prove the maths fully, in writing, right now, but the solution was to adjust the position by 1-cos(angle). Cue applause...
 
-![AI-chase](/assets/goodline.png)
+![AI-chase]({{ site.baseurl }}/assets/goodline.png)
 
 Given this was such a task and something perhaps worth storing in its own class, I made a Line.h class to keep hold of this work. I'm sure it'll come in very handy some time in future...

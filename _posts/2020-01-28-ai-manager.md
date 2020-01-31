@@ -75,4 +75,4 @@ The enemy would pathfind again if the player changed tiles - this was considered
 
 Overall implementing the A.I. was not too bad, I was somewhat apprehensive about how effective it might turn out but during play it's actually very surprising how intelligent he can appear - at times he actually manages to cut you off while you're running from him leading to quite the jumpscare!
 
-![AI-chase](/assets/shining-ai.gif)
+![AI-chase]({{ site.baseurl }}/assets/shining-ai.gif)
