@@ -1,9 +1,9 @@
 # Site settings
-title: Blog #website title
+title: Project 237 - A Shining Devlog #website title
 description: > # this means to ignore newlines until "baseurl:"
   Blog
 url: https://uwegames-llp.github.io # the base hostname & protocol for your site
-baseurl: /the-shining-reb0rn-devlog-username #the sub-path of your site, e.g. /blog/
+baseurl: /the-shining-devlog-EveyNull #the sub-path of your site, e.g. /blog/
 
 disqus_shortname:  # leave empty if you don't want comments
 google_analytics: false #if set to "true" modify the google_analytycs.html, set to false otherwise
@@ -16,7 +16,7 @@ links:
     url:          /archive
     external:     false
   - name:         GitHub
-    url:          https://github.com/username
+    url:          https://github.com/EveyNull
     external:     true
 
 # Build settings
